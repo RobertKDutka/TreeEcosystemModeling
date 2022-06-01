@@ -65,17 +65,17 @@ class World {
             // Test center points of voxels to determine if they are within cone
             float brightest_val = 0;
             std::vector<glm::vec3> ideal_points;
-            for(float z = max_z; z > min_z; z--) {
-                for(float y = max_y; y > min_y; y--) {
-                    for(float x = max_x; x > min_x; x--) {
+            for(float z = max_z; z > min_z; z-=1) {
+                for(float y = max_y; y > min_y; y-=1) {
+                    for(float x = max_x; x > min_x; x-=1) {
                         if(is_point_in_cone(point, search_dir, radius, glm::vec3{x, y, z})) {
                             float light_at_voxel = getLightAtVoxel(glm::vec3{x, y, z});
                             if(light_at_voxel == brightest_val) {
-                                ideal_points.push_back(glm::vec3{x, y, z});
+                                ideal_points.push_back(glm::vec3{x, y, z} - point);
                             } else if(light_at_voxel > brightest_val) {
                                 brightest_val = light_at_voxel;
                                 ideal_points.clear();
-                                ideal_points.push_back(glm::vec3{x, y, z});
+                                ideal_points.push_back(glm::vec3{x, y, z} - point);
                             }
                         }
                     }
@@ -83,9 +83,13 @@ class World {
             }
 
             // Calculate normalized sum of normalized vectors to best points
+            glm::vec3 ideal_vector = glm::normalize(ideal_points[0]);
+            for(size_t i = 1; i < ideal_points.size(); i++) {
+                ideal_vector += glm::normalize(ideal_points[i]);
+            }
+            ideal_vector = glm::normalize(ideal_vector);
 
-
-            return glm::vec3{0.0f, 0.0f, 0.0f};
+            return ideal_vector;
         }
 
     private:
@@ -156,6 +160,7 @@ class World {
         glm::vec3 project_dir_to_circle_plane(glm::vec3 circle_norm, glm::vec3 circle_center, glm::vec3 dir, float  radius) {
             glm::vec3 dir_cross_norm = glm::cross(circle_norm, dir);
             glm::mat4 rot_matrix(1);
+            // Might be a problem if the cross product is 0
             rot_matrix = glm::rotate(rot_matrix, glm::radians(90.0f), dir_cross_norm);
             glm::vec3 proj_vect = glm::vec3(rot_matrix * glm::vec4(circle_norm, 1.0f));
             proj_vect = glm::normalize(proj_vect) * radius;
@@ -193,8 +198,8 @@ class World {
             return num;
         }
 
-        bool is_point_in_cone(glm::vec3 cone_tip, glm::vec3 vec_to_base, float radius, glm::vec3 point) {
-            glm::vec3 norm_vec_2_base = glm::normalize(vec_to_base);
+        bool is_point_in_cone(glm::vec3 cone_tip, glm::vec3 tip_to_base, float radius, glm::vec3 point) {
+            glm::vec3 norm_vec_2_base = glm::normalize(tip_to_base);
             glm::vec3 p_min_tip = point - cone_tip;
             float cone_dist = glm::dot(p_min_tip, norm_vec_2_base);
 

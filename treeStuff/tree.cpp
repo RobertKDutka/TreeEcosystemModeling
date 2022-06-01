@@ -159,36 +159,53 @@ class Tree {
             if(!internode->has_main_aborted) {
                 if(internode->mainAxisLight > branch_shedding_threshold) {
                     //add shoot to main
-                    glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world);
+                    glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 0);
+                    
                     Metamer* new_branch = (Metamer*)malloc(sizeof(Metamer));
                     memset(new_branch, 0, sizeof(Metamer));
                     new_branch->base = internode->end;
                     new_branch->end = internode->end + ideal_branch_angle;
+
+                    internode->mainAxis = new_branch;
                 }
             }
 
             if(!internode->has_lat_aborted) {
                 if(internode->latAxisLight > branch_shedding_threshold) {
                     //add shoot to lat
+                    glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 1);
+                    
+                    Metamer* new_branch = (Metamer*)malloc(sizeof(Metamer));
+                    memset(new_branch, 0, sizeof(Metamer));
+                    new_branch->base = internode->end;
+                    new_branch->end = internode->end + ideal_branch_angle;
+
+                    internode->latAxis = new_branch;
                 }
             }
         }
 
-        glm::vec3 getIdealBranchAngle(Metamer* internode, World* world) {
+        // axis should be 0 if getting branch angle for main, 1 if lateral
+        glm::vec3 getIdealBranchAngle(Metamer* internode, World* world, size_t axis) {
             //Get a vector normal to direction of main branch
             glm::vec3 norm_main_axis = glm::normalize(internode->end - internode->base);
             glm::vec3 a{(-norm_main_axis.y - norm_main_axis.z) / norm_main_axis.x, 1, 1};
             a = glm::normalize(a);
 
-            //rotate by branching angle with normal a
-            glm::mat4 rot_matrix(1);
-            rot_matrix = glm::rotate(rot_matrix, glm::radians(branching_angle), a);
-            glm::vec3 default_angle = glm::vec3(rot_matrix * glm::vec4(norm_main_axis, 1.0f));
-            //rotate random amount along main axis (end - base)
-            glm::mat4 rot_matrix(1);
-            float rand_rot = rand() % 360;
-            rot_matrix = glm::rotate(rot_matrix, glm::radians(rand_rot), norm_main_axis);
-            default_angle = glm::vec3(rot_matrix * glm::vec4(default_angle, 1.0f));
+            glm::vec3 default_angle;
+            if(axis) { // 0 if main axis, 1 if lateral axis
+                //rotate by branching angle with normal a
+                glm::mat4 rot_matrix(1);
+                rot_matrix = glm::rotate(rot_matrix, glm::radians(branching_angle), a);
+                default_angle = glm::vec3(rot_matrix * glm::vec4(norm_main_axis, 1.0f));
+                //rotate random amount along main axis (end - base)
+                glm::mat4 rot_matrix(1);
+                float rand_rot = rand() % 360;
+                rot_matrix = glm::rotate(rot_matrix, glm::radians(rand_rot), norm_main_axis);
+                default_angle = glm::vec3(rot_matrix * glm::vec4(default_angle, 1.0f));
+            } else {
+                default_angle = norm_main_axis;
+            }
 
             // optimal angle will be voxel in perception area with least shade
             glm::vec3 optimal_growth_dir = world->getOptimalGrowthDirection(internode->end, default_angle);

@@ -165,8 +165,11 @@ class Tree {
                     memset(new_branch, 0, sizeof(Metamer));
                     new_branch->base = internode->end;
                     new_branch->end = internode->end + ideal_branch_angle;
-
                     internode->mainAxis = new_branch;
+
+                } else if(internode->mainAxisLight < branch_shedding_threshold) {
+                    destroyMetamer(internode->mainAxis);
+                    internode->has_main_aborted = true;
                 }
             }
 
@@ -181,6 +184,9 @@ class Tree {
                     new_branch->end = internode->end + ideal_branch_angle;
 
                     internode->latAxis = new_branch;
+                } else if(internode->latAxisLight < branch_shedding_threshold) {
+                    destroyMetamer(internode->latAxis);
+                    internode->has_lat_aborted = true;
                 }
             }
         }

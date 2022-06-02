@@ -7,4 +7,4 @@ contain enough details, some features and parameters will have to be approximate
 
 I am working on 2 parts of the project, the tree models and the graphical representation. 
 The Vulkan part of the project was just for me to get started in Vulkan and draws a pipe along 
-some coordinates. It will be heavily modified later.
+some coordinates. It will be heavily modified later, and possibly swapped out for a different graphic solution.

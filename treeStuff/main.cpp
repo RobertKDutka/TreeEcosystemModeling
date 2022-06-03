@@ -21,6 +21,8 @@ int main(int argc, char** argv) {
         max_vigor, 
         shedding);
 
+    new_world->printTrees();
+
     delete new_world;
 
     return 0;

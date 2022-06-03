@@ -92,6 +92,10 @@ class World {
             return ideal_vector;
         }
 
+        void printTrees() {
+            tree->printTree();
+        }
+
     private:
         Tree* tree;
 

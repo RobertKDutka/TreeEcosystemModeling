@@ -5,6 +5,7 @@
 
 #include <vector>
 #include "world.cpp"
+#include <iostream>
 
 extern const size_t VOXEL_GRID_LENGTH;
 const float DEFAULT_START_LENGTH = 0.5;
@@ -63,6 +64,10 @@ class Tree {
 
         void growNewShoots(World* world) {
             growShoots(root, world);
+        }
+
+        void printTree() {
+            printMetamerTree(this->root);
         }
 
         ~Tree() {
@@ -226,6 +231,24 @@ class Tree {
             return ideal;
         }
 
+        void printMetamerTree(Metamer* metamer) {
+            std::cout << "Metamer Base: ";
+            printVec3(metamer->base);
+            std::cout << "\tEnd: ";
+            printVec3(metamer->end);
+            std::cout << std::endl;
+
+            if(metamer->mainAxis) {
+                std::cout << "mainAxis: ";
+                printMetamerTree(metamer->mainAxis);
+            }
+
+            if(metamer->latAxis) {
+                std::cout << "latAxis: ";
+                printMetamerTree(metamer->latAxis);
+            }
+        }
+
         void destroyMetamer(Metamer* metamer) {
             if(metamer->latAxis) {
                 destroyMetamer(metamer->latAxis);
@@ -238,3 +261,7 @@ class Tree {
             free(metamer);
         }
 };
+
+void printVec3(glm::vec3 vec) {
+    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
+}

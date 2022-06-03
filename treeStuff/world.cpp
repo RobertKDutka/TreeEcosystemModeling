@@ -115,6 +115,7 @@ void World::updateShade(glm::vec3 bud) {
         growing tree
 
 */
+
 void World::runTimeStep(){
     updateWorldState();
     distributeResources();

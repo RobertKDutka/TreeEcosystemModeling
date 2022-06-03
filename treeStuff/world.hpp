@@ -12,7 +12,7 @@
 
 #include "tree.hpp"
 
-
+class Tree;
 
 const size_t VOXEL_GRID_LENGTH = 201; // 200x200x200
 const size_t VOXEL_CUBIC_AREA = 201*201*201;
@@ -48,6 +48,7 @@ class World {
                 growing tree
 
         */
+       
         void runTimeStep();
 
         void updateWorldState();

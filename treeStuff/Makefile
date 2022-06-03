@@ -1,5 +1,5 @@
 test: main.cpp tree.o world.o
-	g++ world.o tree.o main.cpp -o test
+	g++ tree.o world.o main.cpp -o test
 	./test
 
 world.o: world.cpp world.hpp tree.hpp tree.cpp
@@ -7,3 +7,8 @@ world.o: world.cpp world.hpp tree.hpp tree.cpp
 
 tree.o: tree.cpp tree.hpp world.cpp world.hpp
 	g++ -c tree.cpp
+
+clean:
+	rm -f world.o
+	rm -f tree.o
+	rm test

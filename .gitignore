@@ -1,3 +1,4 @@
 Lib/
 reading/
 VulkanTest
+*.o

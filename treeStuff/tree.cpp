@@ -1,55 +1,7 @@
 #include "tree.hpp"
 
 
-// branching angle should be in degrees and is converted to radians
-// Might want to make an info struct to make the parameter list shorter
-World::Tree(float apical, float det, float angle, float res_distr, float max_vigor, float shedding, float x, float y, float z) {
-    Metamer* new_root = (Metamer*)malloc(sizeof(Metamer));
-    memset(new_root, 0, sizeof(Metamer));
-    new_root->base = glm::vec3{x, y, z};
-    new_root->end = glm::vec3{x, y, z + DEFAULT_START_LENGTH};
-
-    this->root = new_root;
-
-    this->apical_control = apical;
-    this->determinacy = det;
-    this->branching_angle = glm::radians(angle);
-    this->resource_distribution_coefficient = res_distr;
-    this->root_vigor_max = max_vigor;
-    this->branch_shedding_threshold = shedding;
-}
-
-
-std::vector<glm::vec3> World::getTreeBudLocations() {
-    std::vector<glm::vec3> budPositions;
-    getBudPositions(budPositions, root);
-
-    return budPositions;
-}
-
-
-void World::distributeLight(World* world) {
-    updateHarvestedLight(root, world);
-    distributeHarvestedLight(root, (root->mainAxisLight + root->latAxisLight));
-}
-
-
-void World::growNewShoots(World* world) {
-    growShoots(root, world);
-}
-
-
-void World::printTree() {
-    printMetamerTree(this->root);
-}
-
-
-World::~Tree() {
-    destroyMetamer(this->root);
-}
-
-
-void World::getBudPositions(std::vector<glm::vec3>& budVector, const Metamer* metamer) {
+void Tree::getBudPositions(std::vector<glm::vec3>& budVector, const Metamer* metamer) {
     // If nothing past terminal bud add terminal bud.
     // Else get buds up main axis
     if(!(metamer->mainAxis) && !metamer->has_main_aborted) {
@@ -68,7 +20,7 @@ void World::getBudPositions(std::vector<glm::vec3>& budVector, const Metamer* me
 }
 
 
-void World::updateHarvestedLight(Metamer* internode, World* world) {
+void Tree::updateHarvestedLight(Metamer* internode, World* world) {
     internode->mainAxisLight = 0;
     internode->latAxisLight = 0;
 
@@ -92,7 +44,7 @@ void World::updateHarvestedLight(Metamer* internode, World* world) {
 }
 
 
-void World::distributeHarvestedLight(Metamer* internode, double inboundLight) {
+void Tree::distributeHarvestedLight(Metamer* internode, double inboundLight) {
     if(internode->has_main_aborted) {
         internode->mainAxisLight = 0;
         internode->latAxisLight = inboundLight;
@@ -117,7 +69,7 @@ void World::distributeHarvestedLight(Metamer* internode, double inboundLight) {
 }
 
 
-void World::growShoots(Metamer* internode, World* world) {
+void Tree::growShoots(Metamer* internode, World* world) {
     //if vigor > shedding grow a new metamer ?
     if(internode->mainAxis) {
         growShoots(internode->mainAxis, world);
@@ -164,7 +116,7 @@ void World::growShoots(Metamer* internode, World* world) {
 
 
 // axis should be 0 if getting branch angle for main, 1 if lateral
-glm::vec3 World::getIdealBranchAngle(Metamer* internode, World* world, size_t axis) {
+glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axis) {
     //Get a vector normal to direction of main branch
     glm::vec3 norm_main_axis = glm::normalize(internode->end - internode->base);
     glm::vec3 a{(-norm_main_axis.y - norm_main_axis.z) / norm_main_axis.x, 1, 1};
@@ -177,10 +129,10 @@ glm::vec3 World::getIdealBranchAngle(Metamer* internode, World* world, size_t ax
         rot_matrix = glm::rotate(rot_matrix, glm::radians(branching_angle), a);
         default_angle = glm::vec3(rot_matrix * glm::vec4(norm_main_axis, 1.0f));
         //rotate random amount along main axis (end - base)
-        glm::mat4 rot_matrix(1);
+        glm::mat4 rot_matrix2(1);
         float rand_rot = rand() % 360;
-        rot_matrix = glm::rotate(rot_matrix, glm::radians(rand_rot), norm_main_axis);
-        default_angle = glm::vec3(rot_matrix * glm::vec4(default_angle, 1.0f));
+        rot_matrix2 = glm::rotate(rot_matrix2, glm::radians(rand_rot), norm_main_axis);
+        default_angle = glm::vec3(rot_matrix2 * glm::vec4(default_angle, 1.0f));
     } else {
         default_angle = norm_main_axis;
     }
@@ -199,7 +151,12 @@ glm::vec3 World::getIdealBranchAngle(Metamer* internode, World* world, size_t ax
 }
 
 
-void World::printMetamerTree(Metamer* metamer) {
+void printVec3(glm::vec3 vec) {
+    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
+}
+
+
+void Tree::printMetamerTree(Metamer* metamer) {
     std::cout << "Metamer Base: ";
     printVec3(metamer->base);
     std::cout << "\tEnd: ";
@@ -218,7 +175,7 @@ void World::printMetamerTree(Metamer* metamer) {
 }
 
 
-void destroyMetamer(Metamer* metamer) {
+void Tree::destroyMetamer(Metamer* metamer) {
     if(metamer->latAxis) {
         destroyMetamer(metamer->latAxis);
     }
@@ -231,6 +188,54 @@ void destroyMetamer(Metamer* metamer) {
 }
 
 
-void printVec3(glm::vec3 vec) {
-    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
+//////////////////////////
+// PUBLIC FUNCTIONS BELOW
+//////////////////////////
+
+
+// branching angle should be in degrees and is converted to radians
+// Might want to make an info struct to make the parameter list shorter
+Tree::Tree(float apical, float det, float angle, float res_distr, float max_vigor, float shedding, float x, float y, float z) {
+    Metamer* new_root = (Metamer*)malloc(sizeof(Metamer));
+    memset(new_root, 0, sizeof(Metamer));
+    new_root->base = glm::vec3{x, y, z};
+    new_root->end = glm::vec3{x, y, z + DEFAULT_START_LENGTH};
+
+    this->root = new_root;
+
+    this->apical_control = apical;
+    this->determinacy = det;
+    this->branching_angle = glm::radians(angle);
+    this->resource_distribution_coefficient = res_distr;
+    this->root_vigor_max = max_vigor;
+    this->branch_shedding_threshold = shedding;
+}
+
+
+std::vector<glm::vec3> Tree::getTreeBudLocations() {
+    std::vector<glm::vec3> budPositions;
+    getBudPositions(budPositions, root);
+
+    return budPositions;
+}
+
+
+void Tree::distributeLight(World* world) {
+    updateHarvestedLight(root, world);
+    distributeHarvestedLight(root, (root->mainAxisLight + root->latAxisLight));
+}
+
+
+void Tree::growNewShoots(World* world) {
+    growShoots(root, world);
+}
+
+
+void Tree::printTree() {
+    printMetamerTree(this->root);
+}
+
+
+Tree::~Tree() {
+    destroyMetamer(this->root);
 }

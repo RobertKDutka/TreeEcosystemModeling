@@ -1,5 +1,6 @@
 #include "world.hpp"
 
+
 World::World(float a, float b, float apical, float det, float angle, float res_distr, float max_vigor, float shedding) {
     memset(voxels, 0, VOXEL_CUBIC_AREA);
     this->a = a;
@@ -78,6 +79,10 @@ void World::printTrees() {
     tree->printTree();
 }
 
+
+//////////////////////////
+// PRIVATE FUNCTIONS BELOW
+//////////////////////////
 
 // I could try to batch up the buds and then update the shadow value
 void World::updateShade(glm::vec3 bud) {

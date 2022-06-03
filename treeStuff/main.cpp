@@ -1,5 +1,5 @@
 #include <iostream>
-#include "world.cpp"
+#include "world.hpp"
 
 int main(int argc, char** argv) {
     float a = 0.25;

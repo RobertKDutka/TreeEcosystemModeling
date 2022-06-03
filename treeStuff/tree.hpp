@@ -1,14 +1,19 @@
+#pragma once
+
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
-#include "world.hpp"
 #include <iostream>
 
-extern const size_t VOXEL_GRID_LENGTH;
+#include "world.hpp"
+
+
+class World;
 const float DEFAULT_START_LENGTH = 0.5;
+
 
 // Metamer count per tree in the hundreds of thousands for old trees
 struct Metamer {
@@ -28,22 +33,8 @@ struct Metamer {
     Metamer* latAxis;
 };
 
+
 class Tree {
-    public:
-        Tree();
-
-        Tree(float apical, float det, float angle, float res_distr, float max_vigor, float shedding, float x, float y, float z);
-
-        std::vector<glm::vec3> getTreeBudLocations();
-
-        void distributeLight(World* world);
-
-        void growNewShoots(World* world);
-
-        void printTree();
-
-        ~Tree();
-
     private:
         Metamer* root;
         float apical_control; // [0, 1]
@@ -69,4 +60,18 @@ class Tree {
         void printMetamerTree(Metamer* metamer);
 
         void destroyMetamer(Metamer* metamer);
+    public:
+        Tree(float apical, float det, float angle, float res_distr, float max_vigor, float shedding, float x, float y, float z);
+
+        std::vector<glm::vec3> getTreeBudLocations();
+
+        void distributeLight(World* world);
+
+        void growNewShoots(World* world);
+
+        void printTree();
+
+        ~Tree();
+
+
 };

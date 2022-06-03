@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun  3 11:24:49 2022
+# Make data base, printed on Fri Jun  3 15:13:12 2022
 
 # Variables
 
@@ -194,6 +194,7 @@ MAKE_VERSION := 4.3
 DISABLE_WAYLAND = 1
 # environment
 SNAP_DATA = /var/snap/code/97
+ 
 # environment
 SNAP_CONTEXT = FAdaYD69YTACT_s6T1yc9_pA1V-meJIh-D-Bu8KfkZOWJX-Nwc3y
 # environment
@@ -206,7 +207,6 @@ GDK_PIXBUF_MODULE_FILE = /home/robertkdutka/snap/code/common/.cache/gdk-pixbuf-l
 XDG_SESSION_CLASS = user
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
- 
 # environment
 HOME = /home/robertkdutka
 # environment
@@ -258,9 +258,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 2053, inode 4849727): 8 files, no impossibilities.
+# . (device 2053, inode 4849727): 12 files, no impossibilities.
 
-# 8 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -269,11 +269,43 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 # Files
 
 # Not a target:
+tree.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-20 17:48:59.680775875
+#  Last modified 2022-06-03 15:09:40.671853055
 #  File has been updated.
 #  Successfully updated.
+
+# Not a target:
+tree.hpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+world.o: world.cpp world.hpp tree.hpp tree.cpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 6):
+	g++ -c world.cpp
+
+# Not a target:
+world.hpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+tree.o: tree.cpp tree.hpp world.cpp world.hpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 9):
+	g++ -c tree.cpp
 
 # Not a target:
 .DEFAULT:
@@ -294,28 +326,34 @@ main.cpp:
 #  Modification time never checked.
 #  File has not been updated.
 
-test: main.cpp
+test: main.cpp tree.o world.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 2):
-	g++ main.cpp -o test
+	g++ world.o tree.o main.cpp -o test
 	./test
 
+# Not a target:
+world.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=6/1024=1%, Rehash=0, Collisions=0/17=0%
+# Load=12/1024=1%, Rehash=0, Collisions=0/35=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 13 / storage = 110 B / avg = 8 B
-# current buf: size = 8162 B / used = 110 B / count = 13 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 18 / storage = 157 B / avg = 8 B
+# current buf: size = 8162 B / used = 157 B / count = 18 / avg = 8 B
 
-# strcache performance: lookups = 20 / hit rate = 35%
+# strcache performance: lookups = 38 / hit rate = 52%
 # hash-table stats:
-# Load=13/8192=0%, Rehash=0, Collisions=0/20=0%
-# Finished Make data base on Fri Jun  3 11:24:49 2022
+# Load=18/8192=0%, Rehash=0, Collisions=0/38=0%
+# Finished Make data base on Fri Jun  3 15:13:12 2022
 
  

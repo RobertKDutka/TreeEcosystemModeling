@@ -12,6 +12,8 @@
 
 #include "tree.hpp"
 
+
+
 const size_t VOXEL_GRID_LENGTH = 201; // 200x200x200
 const size_t VOXEL_CUBIC_AREA = 201*201*201;
 const size_t SHADOW_DEPTH = 6; // Typically 4-8
@@ -20,20 +22,8 @@ const float MAX_LIGHT_EXPOSURE = 1.0f; //IDK they dont specify time to try stuff
 const float THETA = 90.0f; // typically 90 deg; pi/2 radians
 const float PERCEPTION_RANGE = 4.0f; // typically 4-6 internode lengths
 
+
 class World {
-    public:
-        World(float a, float b, float apical, float det, float angle, float res_distr, float max_vigor, float shedding);
-
-        ~World();
-
-        float getLightAtVoxel(glm::vec3 pos);
-
-        glm::vec3 getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir);
-
-        void printTrees() {
-            tree->printTree();
-        }
-
     private:
         Tree* tree;
 
@@ -83,4 +73,15 @@ class World {
         float perception_range; // typically 4-6 internode lengths
         */
     
+    public:
+        World(float a, float b, float apical, float det, float angle, float res_distr, float max_vigor, float shedding);
+
+        ~World();
+
+        float getLightAtVoxel(glm::vec3 pos);
+
+        glm::vec3 getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir);
+
+        void printTrees();
+
 };

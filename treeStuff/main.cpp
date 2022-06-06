@@ -23,6 +23,10 @@ int main(int argc, char** argv) {
 
     new_world->printTrees();
 
+    new_world->runTimeStep();
+
+    new_world->printTrees();
+
     delete new_world;
 
     return 0;

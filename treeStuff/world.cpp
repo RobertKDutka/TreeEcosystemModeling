@@ -19,7 +19,7 @@ float World::getLightAtVoxel(glm::vec3 pos) {
     size_t x_box = static_cast<int>(pos.x);
     size_t y_box = static_cast<int>(pos.y);
     size_t z_box = static_cast<int>(pos.z);
-    float light_minus_shade = (MAX_LIGHT_EXPOSURE - voxels[x_box][y_box][z_box]);
+    float light_minus_shade = (MAX_LIGHT_EXPOSURE - voxels[x_box][y_box][z_box] + a);
     return std::max(light_minus_shade, 0.0f);
 }
 

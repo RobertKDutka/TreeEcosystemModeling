@@ -90,7 +90,7 @@ void Tree::growShoots(Metamer* internode, World* world) {
             new_branch->end = internode->end + ideal_branch_angle;
             internode->mainAxis = new_branch;
 
-        } else if(internode->mainAxisLight < branch_shedding_threshold) {
+        } else if(internode->mainAxis && internode->mainAxisLight < branch_shedding_threshold) {
             destroyMetamer(internode->mainAxis);
             internode->has_main_aborted = true;
         }
@@ -107,7 +107,7 @@ void Tree::growShoots(Metamer* internode, World* world) {
             new_branch->end = internode->end + ideal_branch_angle;
 
             internode->latAxis = new_branch;
-        } else if(internode->latAxisLight < branch_shedding_threshold) {
+        } else if(internode->latAxis && internode->latAxisLight < branch_shedding_threshold) {
             destroyMetamer(internode->latAxis);
             internode->has_lat_aborted = true;
         }
@@ -130,7 +130,12 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
         default_angle = glm::vec3(rot_matrix * glm::vec4(norm_main_axis, 1.0f));
         //rotate random amount along main axis (end - base)
         glm::mat4 rot_matrix2(1);
-        float rand_rot = rand() % 360;
+        #ifdef NDEBUG
+            float rand_rot = rand() % 360;
+        #else
+            float rand_rot = 180.0f;
+        #endif
+        
         rot_matrix2 = glm::rotate(rot_matrix2, glm::radians(rand_rot), norm_main_axis);
         default_angle = glm::vec3(rot_matrix2 * glm::vec4(default_angle, 1.0f));
     } else {

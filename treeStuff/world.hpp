@@ -33,23 +33,6 @@ class World {
         float b; // b > 1
         
         void updateShade(glm::vec3 bud);
-        
-        /*
-            Seedling Structure
-                    |
-            ------->V
-            |   calc local bud environment
-            |   determine bud fate
-            |   append new shoots
-            |   shed branches
-            |   update branch width
-            L----<--|
-                    V
-                growing tree
-
-        */
-       
-        void runTimeStep();
 
         void updateWorldState();
 
@@ -78,6 +61,23 @@ class World {
         World(float a, float b, float apical, float det, float angle, float res_distr, float max_vigor, float shedding);
 
         ~World();
+
+        /*
+            Seedling Structure
+                    |
+            ------->V
+            |   calc local bud environment
+            |   determine bud fate
+            |   append new shoots
+            |   shed branches
+            |   update branch width
+            L----<--|
+                    V
+                growing tree
+
+        */
+       
+        void runTimeStep();
 
         float getLightAtVoxel(glm::vec3 pos);
 

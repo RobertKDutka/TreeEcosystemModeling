@@ -1,5 +1,5 @@
 #include "tree.hpp"
-
+#include "glm/gtx/string_cast.hpp"
 
 void Tree::getBudPositions(std::vector<glm::vec3>& budVector, const Metamer* metamer) {
     // If nothing past terminal bud add terminal bud.
@@ -69,6 +69,11 @@ void Tree::distributeHarvestedLight(Metamer* internode, double inboundLight) {
 }
 
 
+void printVec3(glm::vec3 vec) {
+    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
+}
+
+
 void Tree::growShoots(Metamer* internode, World* world) {
     //if vigor > shedding grow a new metamer ?
     if(internode->mainAxis) {
@@ -100,7 +105,7 @@ void Tree::growShoots(Metamer* internode, World* world) {
         if(internode->latAxisLight > branch_shedding_threshold) {
             //add shoot to lat
             glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 1);
-            
+            //printVec3(ideal_branch_angle);
             Metamer* new_branch = (Metamer*)malloc(sizeof(Metamer));
             memset(new_branch, 0, sizeof(Metamer));
             new_branch->base = internode->end;
@@ -119,7 +124,18 @@ void Tree::growShoots(Metamer* internode, World* world) {
 glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axis) {
     //Get a vector normal to direction of main branch
     glm::vec3 norm_main_axis = glm::normalize(internode->end - internode->base);
-    glm::vec3 a{(-norm_main_axis.y - norm_main_axis.z) / norm_main_axis.x, 1, 1};
+    glm::vec3 a;
+    //The above line does not check for 0 value of x
+    if(norm_main_axis.x != 0) {
+        float a1 = (-norm_main_axis.y - norm_main_axis.z)/(norm_main_axis.x);
+        a = glm::vec3{a1, 1, 1};
+    } else if (norm_main_axis.y != 0) {
+        float a1 = (-norm_main_axis.x - norm_main_axis.z)/(norm_main_axis.y);
+        a = glm::vec3{1, a1, 1};
+    } else {
+        float a1 = (-norm_main_axis.y - norm_main_axis.x)/(norm_main_axis.z);
+        a = glm::vec3{1, 1, a1};
+    }
     a = glm::normalize(a);
 
     glm::vec3 default_angle;
@@ -156,9 +172,7 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
 }
 
 
-void printVec3(glm::vec3 vec) {
-    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
-}
+
 
 
 void Tree::printMetamerTree(Metamer* metamer) {
@@ -214,6 +228,10 @@ Tree::Tree(float apical, float det, float angle, float res_distr, float max_vigo
     this->resource_distribution_coefficient = res_distr;
     this->root_vigor_max = max_vigor;
     this->branch_shedding_threshold = shedding;
+    
+    this->tropism_up_or_down = -1;
+    this->epsilon = 1.0f;
+    this->eta = 1.0f;
 }
 
 

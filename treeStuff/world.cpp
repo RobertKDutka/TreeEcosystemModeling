@@ -29,27 +29,23 @@ float World::getLightAtVoxel(glm::vec3 pos) {
 glm::vec3 World::getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir) {
     glm::vec3 circle_center = point + glm::normalize(search_dir) * PERCEPTION_RANGE;
     float radius = PERCEPTION_RANGE * glm::sin(glm::radians(THETA / 2));
-    // Generate rectangular prism that encloses cone
-    glm::vec3 pos_z_proj = project_dir_to_circle_plane(search_dir, circle_center, glm::vec3{0, 0, 1}, radius);
-    glm::vec3 neg_z_proj = project_dir_to_circle_plane(search_dir, circle_center, glm::vec3{0, 0, -1}, radius);
-    glm::vec3 pos_y_proj = project_dir_to_circle_plane(search_dir, circle_center, glm::vec3{0, 1, 0}, radius);
-    glm::vec3 neg_y_proj = project_dir_to_circle_plane(search_dir, circle_center, glm::vec3{0, -1, 0}, radius);
-    glm::vec3 pos_x_proj = project_dir_to_circle_plane(search_dir, circle_center, glm::vec3{1, 0, 0}, radius);
-    glm::vec3 neg_x_proj = project_dir_to_circle_plane(search_dir, circle_center, glm::vec3{-1, 0, 0}, radius);
+    
+    // float min_x = getMaxCoordinate(search_dir, circle_center, glm::vec3{-1, 0, 0}, radius);
+    // float max_x = getMaxCoordinate(search_dir, circle_center, glm::vec3{1, 0, 0}, radius);
+    // float min_y = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, -1, 0}, radius);
+    // float max_y = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 1, 0}, radius);
+    // float min_z = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 0, -1}, radius);
+    // float max_z = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 0, 1}, radius);
+    float bounds[6]; // 0 is min x, 1 is max x, 2 is min y 3 is max y, 4 is min z 5 is max z
+    getMaxCoordinates2(point, circle_center, search_dir, radius, bounds);
 
-    float max_z = round_down_near_half(std::max(pos_z_proj.z, point.z));
-    float min_z = round_up_near_half(std::min(neg_z_proj.z, point.z));
-    float max_y = round_down_near_half(std::max(pos_y_proj.y, point.y));
-    float min_y = round_up_near_half(std::min(neg_y_proj.y, point.y));
-    float max_x = round_down_near_half(std::max(pos_x_proj.x, point.x));
-    float min_x = round_up_near_half(std::min(neg_x_proj.x, point.x));
 
     // Test center points of voxels to determine if they are within cone
     float brightest_val = 0;
     std::vector<glm::vec3> ideal_points;
-    for(float z = max_z; z > min_z; z-=1) {
-        for(float y = max_y; y > min_y; y-=1) {
-            for(float x = max_x; x > min_x; x-=1) {
+    for(float z = bounds[5]; z > bounds[4]; z-=1) {
+        for(float y = bounds[3]; y > bounds[2]; y-=1) {
+            for(float x = bounds[1]; x > bounds[0]; x-=1) {
                 if(is_point_in_cone(point, search_dir, radius, glm::vec3{x, y, z})) {
                     float light_at_voxel = getLightAtVoxel(glm::vec3{x, y, z});
                     if(light_at_voxel == brightest_val) {
@@ -72,6 +68,93 @@ glm::vec3 World::getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir
     ideal_vector = glm::normalize(ideal_vector);
 
     return ideal_vector;
+}
+
+
+void World::getMaxCoordinates2(glm::vec3 cone_tip, glm::vec3 circ_cent, glm::vec3 circ_norm, float radius, float* max_vals) {
+    circ_norm = glm::normalize(circ_norm);
+    bool parallel_x_plane = false;
+    bool parallel_y_plane = false;
+    bool parallel_z_plane = false;
+    
+    if(circ_norm == glm::vec3{1.0f, 0.0f, 0.0f} || circ_norm == glm::vec3{-1.0f, 0.0f, 0.0f}) {
+        parallel_x_plane = true;
+    } else if(circ_norm == glm::vec3{0.0f, 1.0f, 0.0f} || circ_norm == glm::vec3{0.0f, -1.0f, 0.0f}) {
+        parallel_y_plane = true;
+    } else if(circ_norm == glm::vec3{0.0f, 0.0f, 1.0f} || circ_norm == glm::vec3{0.0f, 0.0f, -1.0f}) {
+        parallel_z_plane = true;
+    }
+
+    glm::vec3 a;
+    if(circ_norm.x != 0) {
+        float a1 = (-circ_norm.y - circ_norm.z)/(circ_norm.x);
+        a = glm::vec3{a1, 1, 1};
+    } else if (circ_norm.y != 0) {
+        float a1 = (-circ_norm.x - circ_norm.z)/(circ_norm.y);
+        a = glm::vec3{1, a1, 1};
+    } else {
+        float a1 = (-circ_norm.y - circ_norm.x)/(circ_norm.z);
+        a = glm::vec3{1, 1, a1};
+    }
+    glm::vec3 cross = glm::cross(a, circ_norm);
+    a = glm::normalize(a);
+    cross = glm::normalize(cross);
+
+    float angle = glm::atan(cross.x / a.x); // -pi/2 --- +pi/2
+    float other_angle = angle + glm::radians(180.0f);
+    float x_one = radius*(glm::cos(angle)*a.x + glm::sin(angle)*cross.x);
+    float x_two = radius*(glm::cos(other_angle)*a.x + glm::sin(other_angle)*cross.x);
+    if(x_one > x_two) {
+        max_vals[0] = x_two + circ_cent.x;
+        max_vals[1] = x_one + circ_cent.x;
+    } else {
+        max_vals[0] = x_one + circ_cent.x;
+        max_vals[1] = x_two + circ_cent.x;
+    }
+
+    angle = glm::atan(cross.y / a.y); // -pi/2 --- +pi/2
+    other_angle = angle + glm::radians(180.0f);
+    float y_one = radius*(glm::cos(angle)*a.y + glm::sin(angle)*cross.y);
+    float y_two = radius*(glm::cos(other_angle)*a.y + glm::sin(other_angle)*cross.y);
+    if(y_one > y_two) {
+        max_vals[2] = y_two + circ_cent.y;
+        max_vals[3] = y_one + circ_cent.y;
+    } else {
+        max_vals[2] = y_one + circ_cent.y;
+        max_vals[3] = y_two + circ_cent.y;
+    }
+
+    angle = glm::atan(cross.z / a.z); // -pi/2 --- +pi/2
+    other_angle = angle + glm::radians(180.0f);
+    float z_one = radius*(glm::cos(angle)*a.z + glm::sin(angle)*cross.z);
+    float z_two = radius*(glm::cos(other_angle)*a.z + glm::sin(other_angle)*cross.z);
+    if(z_one > z_two) {
+        max_vals[4] = z_two + circ_cent.z;
+        max_vals[5] = z_one + circ_cent.z;
+    } else {
+        max_vals[4] = z_two + circ_cent.z;
+        max_vals[5] = z_one + circ_cent.z;
+    }
+
+    if(parallel_x_plane) {
+        max_vals[0] = circ_cent.x;
+        max_vals[1] = circ_cent.x;
+    } else if(parallel_y_plane) {
+        max_vals[2] = circ_cent.y;
+        max_vals[3] = circ_cent.y;
+    } else if(parallel_z_plane) {
+        max_vals[4] = circ_cent.z;
+        max_vals[5] = circ_cent.z;
+    }
+
+    float max_bound = static_cast<float>(VOXEL_GRID_LENGTH);
+
+    max_vals[0] = std::max(0.0f, std::min(max_vals[0], cone_tip.x));
+    max_vals[1] = std::min(max_bound, std::max(max_vals[1], cone_tip.x));
+    max_vals[2] = std::max(0.0f, std::min(max_vals[2], cone_tip.y));
+    max_vals[3] = std::min(max_bound, std::max(max_vals[3], cone_tip.y));
+    max_vals[4] = std::max(0.0f, std::min(max_vals[4], cone_tip.z));
+    max_vals[5] = std::min(max_bound, std::max(max_vals[5], cone_tip.z));
 }
 
 

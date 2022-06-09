@@ -1,7 +1,8 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/robertkdutka/Desktop/modelingecosystem/treeStuff'
 g++ -c tree.cpp
 g++ -c world.cpp
+ 
 g++ tree.o world.o main.cpp -o test
 ./test
 make: Leaving directory '/home/robertkdutka/Desktop/modelingecosystem/treeStuff'

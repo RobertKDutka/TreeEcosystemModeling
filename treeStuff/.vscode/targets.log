@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Jun  6 14:52:26 2022
+# Make data base, printed on Thu Jun  9 10:51:27 2022
 
 # Variables
 
@@ -23,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-13b3eb5b-0fd8-4ca9-93e9-db55f36d5b67.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-3c09c838-0eae-4a03-a009-42b3d9472330.sock
 # environment
 VSCODE_CWD = /home/robertkdutka/Desktop/modelingecosystem/treeStuff
 # default
@@ -59,13 +57,13 @@ VSCODE_CODE_CACHE_PATH = /home/robertkdutka/.config/Code/CachedData/c3511e6c69bb
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.5UM1M1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.TTPVN1
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.95
+GNOME_TERMINAL_SERVICE = :1.112
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -101,13 +99,13 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3154
+VSCODE_PID = 6154
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/2010,unix/robertkdutka-System:/tmp/.ICE-unix/2010
+SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/1990,unix/robertkdutka-System:/tmp/.ICE-unix/1990
 # automatic
 *F = $(notdir $*)
 # environment
@@ -131,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/ab9880ba_3b16_4b7d_8787_083814be263a
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/b12c4d6b_b85c_4d80_a46d_12535129e898
 # environment
 MAKELEVEL := 0
 # default
@@ -181,7 +179,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := test
 # environment
-SYSTEMD_EXEC_PID = 2038
+SYSTEMD_EXEC_PID = 2040
 # environment
 DISPLAY = :0
 # environment
@@ -257,9 +255,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 2053, inode 4849727): 9 files, no impossibilities.
+# . (device 2053, inode 4849727): 15 files, no impossibilities.
 
-# 9 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -280,6 +278,9 @@ debug: main.cpp treedebug.o worlddebug.o
 #  recipe to execute (from 'Makefile', line 12):
 	g++ treedebug.o worlddebug.o main.cpp -o testdebug -g
 	gdb testdebug
+
+ 
+make: *** No rule to make target 'all'.  Stop.
 
 # Not a target:
 Makefile:
@@ -307,7 +308,6 @@ clean:
 world.o: world.cpp world.hpp tree.hpp tree.cpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 6):
 	g++ -c world.cpp
@@ -385,12 +385,12 @@ world.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 22 / storage = 188 B / avg = 8 B
-# current buf: size = 8162 B / used = 188 B / count = 22 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 24 / storage = 212 B / avg = 8 B
+# current buf: size = 8162 B / used = 212 B / count = 24 / avg = 8 B
 
-# strcache performance: lookups = 49 / hit rate = 55%
+# strcache performance: lookups = 55 / hit rate = 56%
 # hash-table stats:
-# Load=22/8192=0%, Rehash=0, Collisions=0/49=0%
-# Finished Make data base on Mon Jun  6 14:52:26 2022
+# Load=24/8192=0%, Rehash=0, Collisions=0/55=0%
+# Finished Make data base on Thu Jun  9 10:51:27 2022
 
  

@@ -9,7 +9,7 @@ int main(int argc, char** argv) {
     float branching_angle = 45;
     float res_distr = 2;
     float max_vigor = 50;
-    float shedding = 1;
+    float shedding = 0.5f;
 
     World* new_world = new World(
         a, 

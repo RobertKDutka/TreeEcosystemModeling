@@ -40,7 +40,11 @@ class World {
 
         void appendNewShoots();
 
-        glm::vec3 project_dir_to_circle_plane(glm::vec3 circle_norm, glm::vec3 circle_center, glm::vec3 dir, float  radius);
+        float getMaxCoordinate(glm::vec3 circle_norm, glm::vec3 circle_center, glm::vec3 dir, float radius);
+
+        void getMaxCoordinates2(glm::vec3 cone_tip, glm::vec3 circ_cent, glm::vec3 circ_norm, float radius, float* max_vals);
+
+        glm::vec3 project_dir_to_circle_plane(glm::vec3 circle_norm, glm::vec3 circle_center, glm::vec3 dir, float radius);
 
         float round_down_near_half(float num);
 

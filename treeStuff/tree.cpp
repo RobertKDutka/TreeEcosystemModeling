@@ -77,19 +77,19 @@ void printVec3(glm::vec3 vec) {
 void Tree::growShoots(Metamer* internode, World* world) {
     //if vigor > shedding grow a new metamer ?
     if(internode->mainAxis) {
-        std::cout << "growing main axis branch first" << std::endl;
+        //std::cout << "growing main axis branch first" << std::endl;
         growShoots(internode->mainAxis, world);
     }
 
     if(internode->latAxis) {
-        std::cout << "growing lat axis branch first" << std::endl;
+        //std::cout << "growing lat axis branch first" << std::endl;
         growShoots(internode->latAxis, world);
     }
 
     if(!internode->has_main_aborted) {
-        std::cout << "current nodes mainAxisLight: " << internode->mainAxisLight << std::endl;
-        if(internode->mainAxisLight > branch_shedding_threshold) {
-            std::cout << "adding main axis" << std::endl;
+        //std::cout << "current nodes mainAxisLight: " << internode->mainAxisLight << std::endl;
+        if(!internode->mainAxis && internode->mainAxisLight > branch_shedding_threshold) {
+            //std::cout << "adding main axis" << std::endl;
             //add shoot to main
             glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 0);
             
@@ -99,7 +99,7 @@ void Tree::growShoots(Metamer* internode, World* world) {
             new_branch->end = internode->end + ideal_branch_angle;
             internode->mainAxis = new_branch;
         } else if(internode->mainAxis && internode->mainAxisLight < branch_shedding_threshold) {
-            std::cout << "trimming main axis" << std::endl;
+            //std::cout << "trimming main axis" << std::endl;
             destroyMetamer(internode->mainAxis);
             internode->has_main_aborted = true;
             internode->mainAxis = 0;
@@ -107,9 +107,9 @@ void Tree::growShoots(Metamer* internode, World* world) {
     }
 
     if(!internode->has_lat_aborted) {
-        std::cout << "current nodes latAxisLight: " << internode->latAxisLight << std::endl;
-        if(internode->latAxisLight > branch_shedding_threshold) {
-            std::cout << "adding lat axis" << std::endl;
+        //std::cout << "current nodes latAxisLight: " << internode->latAxisLight << std::endl;
+        if(!internode->latAxis && internode->latAxisLight > branch_shedding_threshold) {
+            //std::cout << "adding lat axis" << std::endl;
             //add shoot to lat
             glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 1);
             //printVec3(ideal_branch_angle);
@@ -120,7 +120,7 @@ void Tree::growShoots(Metamer* internode, World* world) {
 
             internode->latAxis = new_branch;
         } else if(internode->latAxis && internode->latAxisLight < branch_shedding_threshold) {
-            std::cout << "trimming lat axis" << std::endl;
+            //std::cout << "trimming lat axis" << std::endl;
             destroyMetamer(internode->latAxis);
             internode->has_lat_aborted = true;
             internode->latAxis = 0;
@@ -174,21 +174,21 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
         default_angle = norm_main_axis;
     }
     default_angle = glm::normalize(default_angle);
-    std::cout << "getting growth direction" << std::endl;
-    printVec3(default_angle);
+    //std::cout << "getting growth direction" << std::endl;
+    //printVec3(default_angle);
 
     // optimal angle will be voxel in perception area with least shade
     glm::vec3 optimal_growth_dir = world->getOptimalGrowthDirection(internode->end, default_angle);
-    printVec3(optimal_growth_dir);
+    //printVec3(optimal_growth_dir);
 
     // tropism vector will just be up or down
     glm::vec3 tropism_vector = glm::vec3{0, 0, tropism_up_or_down};
-    printVec3(tropism_vector);
+    //printVec3(tropism_vector);
 
     // ideal angle = default + eps*optimal_growth_vector + eta*tropism_vector
     glm::vec3 ideal = default_angle + epsilon * optimal_growth_dir + eta * tropism_vector;
     ideal = DEFAULT_START_LENGTH * glm::normalize(ideal);
-    printVec3(ideal);
+    //printVec3(ideal);
 
     return ideal;
 }
@@ -251,6 +251,7 @@ Tree::Tree(float apical, float det, float angle, float res_distr, float max_vigo
     this->root_vigor_max = max_vigor;
     this->branch_shedding_threshold = shedding;
     
+    // TODO not hard code these
     this->tropism_up_or_down = -1;
     this->epsilon = 1.0f;
     this->eta = 1.0f;

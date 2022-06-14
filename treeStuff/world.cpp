@@ -30,16 +30,9 @@ glm::vec3 World::getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir
     glm::vec3 circle_center = point + glm::normalize(search_dir) * PERCEPTION_RANGE;
     float radius = PERCEPTION_RANGE * glm::tan(glm::radians(THETA / 2.));
     
-    // float min_x = getMaxCoordinate(search_dir, circle_center, glm::vec3{-1, 0, 0}, radius);
-    // float max_x = getMaxCoordinate(search_dir, circle_center, glm::vec3{1, 0, 0}, radius);
-    // float min_y = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, -1, 0}, radius);
-    // float max_y = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 1, 0}, radius);
-    // float min_z = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 0, -1}, radius);
-    // float max_z = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 0, 1}, radius);
     float bounds[6]; // 0 is min x, 1 is max x, 2 is min y 3 is max y, 4 is min z 5 is max z
     getMaxCoordinates2(point, circle_center, search_dir, radius, bounds);
     
-
     // Test center points of voxels to determine if they are within cone
     float brightest_val = 0;
     std::vector<glm::vec3> ideal_points;

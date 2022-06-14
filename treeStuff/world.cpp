@@ -20,7 +20,7 @@ float World::getLightAtVoxel(glm::vec3 pos) {
     size_t y_box = static_cast<int>(pos.y);
     size_t z_box = static_cast<int>(pos.z);
     float light_minus_shade = (MAX_LIGHT_EXPOSURE - voxels[x_box][y_box][z_box] + a);
-    return std::max(light_minus_shade, 0.0f);
+    return std::min(std::max(light_minus_shade, 0.0f), MAX_LIGHT_EXPOSURE);
 }
 
 
@@ -28,7 +28,7 @@ float World::getLightAtVoxel(glm::vec3 pos) {
 // from end point in a conical area in the search direction
 glm::vec3 World::getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir) {
     glm::vec3 circle_center = point + glm::normalize(search_dir) * PERCEPTION_RANGE;
-    float radius = PERCEPTION_RANGE * glm::sin(glm::radians(THETA / 2));
+    float radius = PERCEPTION_RANGE * glm::tan(glm::radians(THETA / 2.));
     
     // float min_x = getMaxCoordinate(search_dir, circle_center, glm::vec3{-1, 0, 0}, radius);
     // float max_x = getMaxCoordinate(search_dir, circle_center, glm::vec3{1, 0, 0}, radius);
@@ -38,7 +38,7 @@ glm::vec3 World::getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir
     // float max_z = getMaxCoordinate(search_dir, circle_center, glm::vec3{0, 0, 1}, radius);
     float bounds[6]; // 0 is min x, 1 is max x, 2 is min y 3 is max y, 4 is min z 5 is max z
     getMaxCoordinates2(point, circle_center, search_dir, radius, bounds);
-
+    
 
     // Test center points of voxels to determine if they are within cone
     float brightest_val = 0;

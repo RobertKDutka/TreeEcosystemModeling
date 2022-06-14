@@ -2,8 +2,8 @@
 #include "world.hpp"
 
 int main(int argc, char** argv) {
-    float a = 0.25;
-    float b = 1.5;
+    float a = 0.15;
+    float b = 1.0;
     float apical = 0.5;
     float determinacy = 0.5;
     float branching_angle = 45;
@@ -22,10 +22,15 @@ int main(int argc, char** argv) {
         shedding);
 
     new_world->printTrees();
+    std::cout << std::endl;
 
     new_world->runTimeStep();
-
     new_world->printTrees();
+    std::cout << std::endl;
+
+    new_world->runTimeStep();
+    new_world->printTrees();
+    std::cout << std::endl;
 
     delete new_world;
 

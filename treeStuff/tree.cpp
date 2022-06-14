@@ -70,22 +70,26 @@ void Tree::distributeHarvestedLight(Metamer* internode, double inboundLight) {
 
 
 void printVec3(glm::vec3 vec) {
-    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}";
+    std::cout << "{" << vec.x << ", " << vec.y << ", " << vec.z << "}" << std::endl;
 }
 
 
 void Tree::growShoots(Metamer* internode, World* world) {
     //if vigor > shedding grow a new metamer ?
     if(internode->mainAxis) {
+        std::cout << "growing main axis branch first" << std::endl;
         growShoots(internode->mainAxis, world);
     }
 
     if(internode->latAxis) {
+        std::cout << "growing lat axis branch first" << std::endl;
         growShoots(internode->latAxis, world);
     }
 
     if(!internode->has_main_aborted) {
+        std::cout << "current nodes mainAxisLight: " << internode->mainAxisLight << std::endl;
         if(internode->mainAxisLight > branch_shedding_threshold) {
+            std::cout << "adding main axis" << std::endl;
             //add shoot to main
             glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 0);
             
@@ -94,15 +98,18 @@ void Tree::growShoots(Metamer* internode, World* world) {
             new_branch->base = internode->end;
             new_branch->end = internode->end + ideal_branch_angle;
             internode->mainAxis = new_branch;
-
         } else if(internode->mainAxis && internode->mainAxisLight < branch_shedding_threshold) {
+            std::cout << "trimming main axis" << std::endl;
             destroyMetamer(internode->mainAxis);
             internode->has_main_aborted = true;
+            internode->mainAxis = 0;
         }
     }
 
     if(!internode->has_lat_aborted) {
+        std::cout << "current nodes latAxisLight: " << internode->latAxisLight << std::endl;
         if(internode->latAxisLight > branch_shedding_threshold) {
+            std::cout << "adding lat axis" << std::endl;
             //add shoot to lat
             glm::vec3 ideal_branch_angle = getIdealBranchAngle(internode, world, 1);
             //printVec3(ideal_branch_angle);
@@ -113,8 +120,10 @@ void Tree::growShoots(Metamer* internode, World* world) {
 
             internode->latAxis = new_branch;
         } else if(internode->latAxis && internode->latAxisLight < branch_shedding_threshold) {
+            std::cout << "trimming lat axis" << std::endl;
             destroyMetamer(internode->latAxis);
             internode->has_lat_aborted = true;
+            internode->latAxis = 0;
         }
     }
 }
@@ -140,9 +149,13 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
 
     glm::vec3 default_angle;
     if(axis) { // 0 if main axis, 1 if lateral axis
+        // TODO check is easier to do something like def_ang = {default_length cos B, default length sin B, ...}
         //rotate by branching angle with normal a
         glm::mat4 rot_matrix(1);
-        rot_matrix = glm::rotate(rot_matrix, glm::radians(branching_angle), a);
+
+        //rot_matrix = glm::rotate(rot_matrix, glm::radians(branching_angle), a);
+        rot_matrix = glm::rotate(rot_matrix, branching_angle, a);
+        
         default_angle = glm::vec3(rot_matrix * glm::vec4(norm_main_axis, 1.0f));
         //rotate random amount along main axis (end - base)
         glm::mat4 rot_matrix2(1);
@@ -152,21 +165,30 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
             float rand_rot = 180.0f;
         #endif
         
-        rot_matrix2 = glm::rotate(rot_matrix2, glm::radians(rand_rot), norm_main_axis);
+        //rot_matrix2 = glm::rotate(rot_matrix2, glm::radians(rand_rot), norm_main_axis);
+        rot_matrix2 = glm::rotate(rot_matrix2, rand_rot, norm_main_axis);
+
+        
         default_angle = glm::vec3(rot_matrix2 * glm::vec4(default_angle, 1.0f));
     } else {
         default_angle = norm_main_axis;
     }
+    default_angle = glm::normalize(default_angle);
+    std::cout << "getting growth direction" << std::endl;
+    printVec3(default_angle);
 
     // optimal angle will be voxel in perception area with least shade
     glm::vec3 optimal_growth_dir = world->getOptimalGrowthDirection(internode->end, default_angle);
-    
+    printVec3(optimal_growth_dir);
+
     // tropism vector will just be up or down
-    glm::vec3 tropism_vector = glm::vec3{0, tropism_up_or_down, 0};
+    glm::vec3 tropism_vector = glm::vec3{0, 0, tropism_up_or_down};
+    printVec3(tropism_vector);
 
     // ideal angle = default + eps*optimal_growth_vector + eta*tropism_vector
     glm::vec3 ideal = default_angle + epsilon * optimal_growth_dir + eta * tropism_vector;
     ideal = DEFAULT_START_LENGTH * glm::normalize(ideal);
+    printVec3(ideal);
 
     return ideal;
 }

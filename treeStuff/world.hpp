@@ -17,7 +17,7 @@ class Tree;
 const size_t VOXEL_GRID_LENGTH = 201; // 200x200x200
 const size_t VOXEL_CUBIC_AREA = 201*201*201;
 const size_t SHADOW_DEPTH = 6; // Typically 4-8
-const float MAX_LIGHT_EXPOSURE = 1.0f; //IDK they dont specify time to try stuff out
+const float MAX_LIGHT_EXPOSURE = 4.0f; //IDK they dont specify time to try stuff out
 
 const float THETA = 90.0f; // typically 90 deg; pi/2 radians
 const float PERCEPTION_RANGE = 4.0f; // typically 4-6 internode lengths

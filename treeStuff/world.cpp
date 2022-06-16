@@ -156,6 +156,20 @@ void World::printTrees() {
 }
 
 
+void World::exportPoints() {
+    std::fstream vert_out_file;
+    vert_out_file.open("tsp.txt", std::fstream::out | std::fstream::trunc);
+
+    std::fstream index_out_file;
+    index_out_file.open("tsi.txt", std::fstream::out | std::fstream::trunc);
+
+    tree->exportPoints(vert_out_file, index_out_file);
+
+    vert_out_file.close();
+    index_out_file.close();
+}
+
+
 //////////////////////////
 // PRIVATE FUNCTIONS BELOW
 //////////////////////////

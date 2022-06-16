@@ -22,5 +22,7 @@ worlddebug.o:
 
 clean:
 	rm -f *.o
-	rm test
-	rm testdebug
+	rm -f test
+	rm -f testdebug
+	rm -f tsi.txt
+	rm -f tsp.txt

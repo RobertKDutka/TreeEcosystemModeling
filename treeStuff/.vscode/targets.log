@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Jun 14 10:17:17 2022
+# Make data base, printed on Thu Jun 16 10:52:01 2022
 
 # Variables
 
@@ -23,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-1465dc0a-86b1-43bb-bdd0-53c4b4dcac9c.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-09ba0f86-4fcb-4469-aff7-e96d06f1c5b9.sock
 # environment
 VSCODE_CWD = /home/robertkdutka/Desktop/modelingecosystem/treeStuff
 # default
@@ -59,13 +59,13 @@ VSCODE_CODE_CACHE_PATH = /home/robertkdutka/.config/Code/CachedData/4af164ea3a06
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.IHDIN1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.V34NN1
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.102
+GNOME_TERMINAL_SERVICE = :1.93
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -101,13 +101,13 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 10405
+VSCODE_PID = 3429
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/2021,unix/robertkdutka-System:/tmp/.ICE-unix/2021
+SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/1989,unix/robertkdutka-System:/tmp/.ICE-unix/1989
 # automatic
 *F = $(notdir $*)
 # environment
@@ -131,7 +131,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/b112f08b_2c4d_4c03_822e_00a84de5a161
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/e7d92d24_9255_4bd9_a515_19a69329a01d
 # environment
 MAKELEVEL := 0
 # default
@@ -157,7 +157,6 @@ VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = robertkdutka
 # environment
- 
 GNOME_SETUP_DISPLAY = :1
 # environment
 LESSCLOSE = /usr/bin/lesspipe %s %s
@@ -182,7 +181,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := test
 # environment
-SYSTEMD_EXEC_PID = 2071
+SYSTEMD_EXEC_PID = 2010
 # environment
 DISPLAY = :0
 # environment
@@ -258,9 +257,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 2053, inode 4849727): 14 files, no impossibilities.
+# . (device 2053, inode 4849727): 15 files, no impossibilities.
 
-# 14 files, no impossibilities in 1 directories.
+# 15 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -292,6 +291,7 @@ Makefile:
 # Not a target:
 tree.hpp:
 #  Implicit rule search has not been done.
+ 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -336,7 +336,6 @@ all:
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
- 
 #  File has not been updated.
 
 # Not a target:
@@ -386,12 +385,12 @@ world.cpp:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 24 / storage = 212 B / avg = 8 B
-# current buf: size = 8162 B / used = 212 B / count = 24 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 25 / storage = 225 B / avg = 9 B
+# current buf: size = 8162 B / used = 225 B / count = 25 / avg = 9 B
 
-# strcache performance: lookups = 54 / hit rate = 55%
+# strcache performance: lookups = 55 / hit rate = 54%
 # hash-table stats:
-# Load=24/8192=0%, Rehash=0, Collisions=0/54=0%
-# Finished Make data base on Tue Jun 14 10:17:17 2022
+# Load=25/8192=0%, Rehash=0, Collisions=0/55=0%
+# Finished Make data base on Thu Jun 16 10:52:01 2022
 
  

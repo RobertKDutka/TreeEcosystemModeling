@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <iostream>
+#include <fstream>
 
 #include "world.hpp"
 
@@ -57,6 +58,8 @@ class Tree {
 
         glm::vec3 getIdealBranchAngle(Metamer* internode, World* world, size_t axis);
 
+        static size_t createExportList(std::fstream& vfile, std::fstream& ifile, Metamer* internode, size_t index);
+        
         void printMetamerTree(Metamer* metamer);
 
         void destroyMetamer(Metamer* metamer);
@@ -68,6 +71,8 @@ class Tree {
         void distributeLight(World* world);
 
         void growNewShoots(World* world);
+
+        void exportPoints(std::fstream& file, std::fstream& index_file);
 
         void printTree();
 

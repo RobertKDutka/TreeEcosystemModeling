@@ -151,7 +151,10 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
         //rotate random amount along main axis (end - base)
         glm::mat4 rot_matrix2(1);
         
+        // TODO add variable to control random rotation relates to phyllotaxis
+        // ex. spiral pattern with rotations for different trees
         float rand_rot = rand() % 360;
+
         rot_matrix2 = glm::rotate(rot_matrix2, rand_rot, norm_main_axis);
         
         default_angle = glm::vec3(rot_matrix2 * glm::vec4(default_angle, 1.0f));
@@ -174,7 +177,31 @@ glm::vec3 Tree::getIdealBranchAngle(Metamer* internode, World* world, size_t axi
 }
 
 
+// TODO probably better to make this a pipe at some point in the future
+//
+// change createExportList to maintain record of index value, also return number of 
+// vertices visited in a call so you can accurately update index
+size_t Tree::createExportList(std::fstream& vfile, std::fstream& ifile, Metamer* internode, size_t index) {
+    vfile.write((const char*)(&internode->end.x), sizeof(float));
+    vfile.write((const char*)(&internode->end.y), sizeof(float));
+    vfile.write((const char*)(&internode->end.z), sizeof(float));
 
+    // write index value to a separate file here
+    ifile.write((const char*)(&index), sizeof(size_t));
+
+    size_t visited = 0;
+    if(internode->mainAxis) {
+        visited = createExportList(vfile, ifile, internode->mainAxis, index + 1);
+        // write index value to a separate file here
+        ifile.write((const char*)(&index), sizeof(size_t));
+    }
+
+    if(internode->latAxis) {
+        createExportList(vfile, ifile, internode->latAxis, index + 1 + visited);
+    }
+
+    return 1+visited;
+}
 
 
 void Tree::printMetamerTree(Metamer* metamer) {
@@ -259,6 +286,19 @@ void Tree::growNewShoots(World* world) {
 
 void Tree::printTree() {
     printMetamerTree(this->root);
+}
+
+
+void Tree::exportPoints(std::fstream& vert_file, std::fstream& index_file) {
+    vert_file.write((const char*)(&root->base.x), sizeof(float));
+    vert_file.write((const char*)(&root->base.y), sizeof(float));
+    vert_file.write((const char*)(&root->base.z), sizeof(float));
+
+    //write index value here which would be 0
+    size_t i = 0;
+    index_file.write((const char*)(&i), sizeof(size_t));
+
+    createExportList(vert_file, index_file, root, i+1);
 }
 
 

@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <fstream>
 
 #include "tree.hpp"
 
@@ -89,4 +90,5 @@ class World {
 
         void printTrees();
 
+        void exportPoints();
 };

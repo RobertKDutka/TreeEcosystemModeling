@@ -1,6 +1,4 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-make: *** No rule to make target 'all'.  Stop.
-
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -8,7 +6,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Jun 16 10:52:01 2022
+# Make data base, printed on Fri Jun 17 12:18:24 2022
 
 # Variables
 
@@ -23,7 +21,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-09ba0f86-4fcb-4469-aff7-e96d06f1c5b9.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-880fb8be-bdb2-4d2f-99ae-da8a2ce4f341.sock
 # environment
 VSCODE_CWD = /home/robertkdutka/Desktop/modelingecosystem/treeStuff
 # default
@@ -35,7 +33,7 @@ QT_ACCESSIBILITY = 1
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/98/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/99/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -55,17 +53,17 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/robertkdutka/.config/Code/CachedData/4af164ea3a06f701fe3e89a2bcbb421d2026b68f
+VSCODE_CODE_CACHE_PATH = /home/robertkdutka/.config/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.V34NN1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.F1IHN1
 # default
 .LOADED := 
 # default
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # environment
-GNOME_TERMINAL_SERVICE = :1.93
+GNOME_TERMINAL_SERVICE = :1.101
 # makefile
 MAKEFLAGS = pqrR
 # makefile
@@ -101,13 +99,13 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3429
+VSCODE_PID = 3636
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/1989,unix/robertkdutka-System:/tmp/.ICE-unix/1989
+SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/1994,unix/robertkdutka-System:/tmp/.ICE-unix/1994
 # automatic
 *F = $(notdir $*)
 # environment
@@ -131,7 +129,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/e7d92d24_9255_4bd9_a515_19a69329a01d
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/2aab2029_f1a5_4567_a05d_dcd44fd83ec6
 # environment
 MAKELEVEL := 0
 # default
@@ -147,9 +145,9 @@ MAKEFILES :=
 # environment
 SNAP_USER_COMMON = /home/robertkdutka/snap/code/common
 # environment
-SNAP = /snap/code/98
+SNAP = /snap/code/99
 # environment
-SNAP_REVISION = 98
+SNAP_REVISION = 99
 # environment
 SNAP_REAL_HOME = /home/robertkdutka
 # environment
@@ -181,7 +179,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := test
 # environment
-SYSTEMD_EXEC_PID = 2010
+SYSTEMD_EXEC_PID = 2019
 # environment
 DISPLAY = :0
 # environment
@@ -193,7 +191,7 @@ MAKE_VERSION := 4.3
 # environment
 DISABLE_WAYLAND = 1
 # environment
-SNAP_DATA = /var/snap/code/98
+SNAP_DATA = /var/snap/code/99
 # environment
 SNAP_CONTEXT = FAdaYD69YTACT_s6T1yc9_pA1V-meJIh-D-Bu8KfkZOWJX-Nwc3y
 # environment
@@ -213,13 +211,13 @@ QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-ca747aed-1.68.0-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-ca747aed-1.68.1-main.sock
 # environment
 TERM = xterm-256color
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/98/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/99/usr/share/glib-2.0/schemas
 # environment
 IM_CONFIG_PHASE = 1
 # default
@@ -227,7 +225,7 @@ IM_CONFIG_PHASE = 1
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = 4af164ea
+SNAP_VERSION = 30d9c6cd
 # default
 SUFFIXES := 
 # environment
@@ -241,7 +239,7 @@ SNAP_COMMON = /var/snap/code/common
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/robertkdutka/snap/code/98
+SNAP_USER_DATA = /home/robertkdutka/snap/code/99
 # environment
 XDG_MENU_PREFIX = gnome-
 # environment
@@ -257,9 +255,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 2053, inode 4849727): 15 files, no impossibilities.
+# . (device 2053, inode 4849727): 12 files, no impossibilities.
 
-# 15 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -284,14 +282,13 @@ debug: main.cpp treedebug.o worlddebug.o
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-06 14:52:00.218769207
+#  Last modified 2022-06-16 15:41:56.847757237
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 tree.hpp:
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -300,10 +297,15 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
+make: *** No rule to make target 'all'.  Stop.
+
 #  recipe to execute (from 'Makefile', line 24):
 	rm -f *.o
-	rm test
-	rm testdebug
+	rm -f test
+	rm -f testdebug
+	rm -f tsi.txt
+	rm -f tsp.txt
 
 world.o: world.cpp world.hpp tree.hpp tree.cpp
 #  Implicit rule search has not been done.
@@ -388,9 +390,9 @@ world.cpp:
 # strcache buffers: 1 (0) / strings = 25 / storage = 225 B / avg = 9 B
 # current buf: size = 8162 B / used = 225 B / count = 25 / avg = 9 B
 
-# strcache performance: lookups = 55 / hit rate = 54%
+# strcache performance: lookups = 52 / hit rate = 51%
 # hash-table stats:
-# Load=25/8192=0%, Rehash=0, Collisions=0/55=0%
-# Finished Make data base on Thu Jun 16 10:52:01 2022
+# Load=25/8192=0%, Rehash=0, Collisions=0/52=0%
+# Finished Make data base on Fri Jun 17 12:18:24 2022
 
  

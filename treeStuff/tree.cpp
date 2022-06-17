@@ -189,6 +189,9 @@ size_t Tree::createExportList(std::fstream& vfile, std::fstream& ifile, Metamer*
     // write index value to a separate file here
     ifile.write((const char*)(&index), sizeof(size_t));
 
+    printVec3(internode->end);
+    std::cout << " , index: " << index << std::endl;
+
     size_t visited = 0;
     if(internode->mainAxis) {
         visited = createExportList(vfile, ifile, internode->mainAxis, index + 1);
@@ -197,7 +200,7 @@ size_t Tree::createExportList(std::fstream& vfile, std::fstream& ifile, Metamer*
     }
 
     if(internode->latAxis) {
-        createExportList(vfile, ifile, internode->latAxis, index + 1 + visited);
+        visited += createExportList(vfile, ifile, internode->latAxis, index + 1 + visited);
     }
 
     return 1+visited;
@@ -297,6 +300,9 @@ void Tree::exportPoints(std::fstream& vert_file, std::fstream& index_file) {
     //write index value here which would be 0
     size_t i = 0;
     index_file.write((const char*)(&i), sizeof(size_t));
+
+    printVec3(root->base);
+    std::cout << " , index: 0" << std::endl;
 
     createExportList(vert_file, index_file, root, i+1);
 }

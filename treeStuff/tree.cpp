@@ -193,8 +193,11 @@ size_t Tree::createExportList(std::fstream& vfile, std::fstream& ifile, Metamer*
     std::cout << " , index: " << index << std::endl;
 
     size_t visited = 0;
+    size_t restart = 0xFFFFFFFF;
     if(internode->mainAxis) {
         visited = createExportList(vfile, ifile, internode->mainAxis, index + 1);
+        // write restart index
+        ifile.write((const char*)(&restart), sizeof(size_t));        
         // write index value to a separate file here
         ifile.write((const char*)(&index), sizeof(size_t));
     }

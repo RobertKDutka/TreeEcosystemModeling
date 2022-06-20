@@ -1,3 +1,6 @@
+CFLAGS = -std=c++17 -O2
+LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
+
 test: main.cpp tree.o world.o
 	g++ tree.o world.o main.cpp -o test
 	./test
@@ -18,6 +21,14 @@ treedebug.o:
 worlddebug.o:
 	g++ -g -c world.cpp -o worlddebug.o
 
+graphics: visualizer.cpp
+	g++ $(CFLAGS) -o skeletongraph visualizer.cpp $(LDFLAGS)
+	./skeletongraph
+
+graphicdebug: visualizer.cpp
+	g++ $(CFLAGS) -g -o skeletongraphdebug visualizer.cpp $(LDFLAGS)
+	gdb skeletongraphdebug
+
 .PHONY: clean
 
 clean:
@@ -26,3 +37,5 @@ clean:
 	rm -f testdebug
 	rm -f tsi.txt
 	rm -f tsp.txt
+	rm -f skeletongraph
+	rm -f skeletongraphdebug

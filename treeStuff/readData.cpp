@@ -32,6 +32,9 @@ int main(int argc, char** argv) {
     do {
         ifile.read((char*)&index, sizeof(size_t));
         std::cout << "Index: " << index << std::endl;
+        if(index == 0xFFFFFFFF) {
+            std::cout << "RESTART STRIP" << std::endl;
+        }
     } while(!ifile.eof() | !ifile.fail());
     if(ifile.eof()) {
         std::cout << "ifile eof" << std::endl;

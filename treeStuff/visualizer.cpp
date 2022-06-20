@@ -23,6 +23,7 @@
 #include <array>
 #include <chrono>
 #include <unordered_map>
+#include <fstream>
 
 
 //Some improvements to the code overall deal with memory allocation
@@ -874,8 +875,8 @@ private:
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyInfo{};
 		inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		//inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-		inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
-		inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;
+		inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_LINE_STRIP;
+		inputAssemblyInfo.primitiveRestartEnable = VK_TRUE;
 		
 		VkViewport viewport{};
 		viewport.x = 0.0f;
@@ -942,7 +943,8 @@ private:
 		//Optional if want dynamic states. only some variables can be dynamic otherwise make another pipeline
 		std::vector<VkDynamicState> dynamicStates = {
 			VK_DYNAMIC_STATE_VIEWPORT,
-			VK_DYNAMIC_STATE_LINE_WIDTH
+			VK_DYNAMIC_STATE_LINE_WIDTH,
+			VK_DYNAMIC_STATE_PRIMITIVE_RESTART_ENABLE
 		};
 		VkPipelineDynamicStateCreateInfo dynamicState{};
 		dynamicState.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
@@ -1578,6 +1580,46 @@ private:
 		}
 	}
 
+	// TODO FIX VERTICES AND INDICES NORMALIZE COORDINATES
+	void getLineVertices() {
+		glm::vec3 color = {1.0f, 1.0f, 1.0f};
+		// glm::vec3 nextVert{-0.5f, -0.5f, -0.5f};
+		// Vertex pushMeBack = {nextVert, color, {0.0f, 0.0f}};
+		// vertices.push_back(pushMeBack);
+
+		std::fstream vfile;
+		vfile.open("tsp.txt", std::fstream::in);
+
+		float coord[3];
+		Vertex pushMeBack;
+		do {
+			vfile.read((char*)coord, 3*sizeof(float));
+
+			glm::vec3 point{(coord[0]-100.5)/3, (coord[1]-100.5)/3, coord[2]/3};
+
+
+
+			pushMeBack = {point, color, {0.0f, 0.0f}};
+			vertices.push_back(pushMeBack);		
+		} while(!vfile.eof() | !vfile.fail());
+
+		vfile.close();
+	}
+
+
+	void getLineIndices() {
+		std::fstream ifile;
+		ifile.open("tsi.txt", std::fstream::in);
+		size_t index;
+		do {
+			ifile.read((char*)&index, sizeof(size_t));
+			indices.push_back(index);
+			// if(index == 0xFFFFFFFF) {
+			// 	std::cout << "RESTART STRIP" << std::endl;
+			// }
+   		} while(!ifile.eof() | !ifile.fail());
+	}
+
 
 	void createVertexBuffer() {
 		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertices.size();
@@ -1871,6 +1913,7 @@ private:
 		// printVertInd();
 
 		getLineVertices();
+		getLineIndices();
 
 		createVertexBuffer();
 		createIndexBuffer();

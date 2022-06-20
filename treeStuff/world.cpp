@@ -54,6 +54,9 @@ glm::vec3 World::getOptimalGrowthDirection(glm::vec3 point, glm::vec3 search_dir
     }
 
     // Calculate normalized sum of normalized vectors to best points
+    if(ideal_points.size() == 0) {
+        return glm::vec3{0.0f, 0.0f, 0.0f};
+    }
     glm::vec3 ideal_vector = glm::normalize(ideal_points[0]);
     for(size_t i = 1; i < ideal_points.size(); i++) {
         ideal_vector += glm::normalize(ideal_points[i]);

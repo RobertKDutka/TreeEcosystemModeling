@@ -36,6 +36,13 @@ int main(int argc, char** argv) {
     new_world->printTrees();
     std::cout << std::endl;
 
+    new_world->runTimeStep();
+    new_world->runTimeStep();
+    new_world->runTimeStep();
+    new_world->runTimeStep();
+    new_world->runTimeStep();
+
+
     new_world->exportPoints();
 
     delete new_world;

@@ -25,6 +25,8 @@
 #include <unordered_map>
 #include <fstream>
 
+#include <signal.h>
+
 
 //Some improvements to the code overall deal with memory allocation
 //It is recommended to allocate memory in as few calls as possible and use offsets instead
@@ -37,6 +39,13 @@ public:
 		initVulkan();
 		mainLoop();
 		cleanup();
+	}
+
+	void update() {
+		vertices.clear();
+		indices.clear();
+		getLineVertices();
+		getLineIndices();
 	}
 
 private:
@@ -1592,10 +1601,11 @@ private:
 
 		float coord[3];
 		Vertex pushMeBack;
+		float div = 50.0f;
 		do {
 			vfile.read((char*)coord, 3*sizeof(float));
 
-			glm::vec3 point{(coord[0]-100.5)/3, (coord[1]-100.5)/3, coord[2]/3};
+			glm::vec3 point{(coord[0]-100.5)/div, (coord[1]-100.5)/div, coord[2]/div};
 
 
 
@@ -1618,6 +1628,8 @@ private:
 			// 	std::cout << "RESTART STRIP" << std::endl;
 			// }
    		} while(!ifile.eof() | !ifile.fail());
+
+		ifile.close();
 	}
 
 
@@ -2053,11 +2065,19 @@ private:
 
 		vkDeviceWaitIdle(device);
 	}
+
+	
 };
+
+SkeletalTreeVisualizer app;
+
+void updateTree(int signum) {
+	app.update();
+}
 
 
 int main() {
-	SkeletalTreeVisualizer app;
+	signal(SIGUSR1, updateTree);
 
 	try {
 		app.run();
@@ -2068,3 +2088,5 @@ int main() {
 	
 	return EXIT_SUCCESS;
 }
+
+

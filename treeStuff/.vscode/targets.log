@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Jun 17 12:18:24 2022
+# Make data base, printed on Tue Jun 21 09:02:14 2022
 
 # Variables
 
@@ -21,7 +23,7 @@ SSH_AGENT_LAUNCHER = gnome-keyring
 # environment
 SNAP_INSTANCE_KEY = 
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-880fb8be-bdb2-4d2f-99ae-da8a2ce4f341.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-bb75f048-5ea9-47fe-8137-564ab629d29b.sock
 # environment
 VSCODE_CWD = /home/robertkdutka/Desktop/modelingecosystem/treeStuff
 # default
@@ -57,7 +59,7 @@ VSCODE_CODE_CACHE_PATH = /home/robertkdutka/.config/Code/CachedData/30d9c6cd9483
 # environment
 LANG = C
 # environment
-XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.F1IHN1
+XAUTHORITY = /run/user/1000/.mutter-Xwaylandauth.0H1GO1
 # default
 .LOADED := 
 # default
@@ -99,13 +101,13 @@ SNAP_REEXEC =
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 3636
+VSCODE_PID = 5944
 # environment
 XDG_SESSION_TYPE = wayland
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
-SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/1994,unix/robertkdutka-System:/tmp/.ICE-unix/1994
+SESSION_MANAGER = local/robertkdutka-System:@/tmp/.ICE-unix/2000,unix/robertkdutka-System:/tmp/.ICE-unix/2000
 # automatic
 *F = $(notdir $*)
 # environment
@@ -129,7 +131,7 @@ XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
-GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/2aab2029_f1a5_4567_a05d_dcd44fd83ec6
+GNOME_TERMINAL_SCREEN = /org/gnome/Terminal/screen/116b7c93_ad49_4dfd_a3fc_b521656aa9f7
 # environment
 MAKELEVEL := 0
 # default
@@ -179,7 +181,7 @@ SNAP_ARCH = amd64
 # makefile
 .DEFAULT_GOAL := test
 # environment
-SYSTEMD_EXEC_PID = 2019
+SYSTEMD_EXEC_PID = 2032
 # environment
 DISPLAY = :0
 # environment
@@ -194,8 +196,12 @@ DISABLE_WAYLAND = 1
 SNAP_DATA = /var/snap/code/99
 # environment
 SNAP_CONTEXT = FAdaYD69YTACT_s6T1yc9_pA1V-meJIh-D-Bu8KfkZOWJX-Nwc3y
+# makefile (from 'Makefile', line 2)
+LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
+# makefile (from 'Makefile', line 1)
+CFLAGS = -std=c++17 -O2
 # environment
 COLORTERM = truecolor
 # environment
@@ -247,7 +253,7 @@ GDMSESSION = ubuntu
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=118/1024=12%, Rehash=0, Collisions=11/148=7%
+# Load=120/1024=12%, Rehash=0, Collisions=11/150=7%
 
 # Pattern-specific Variable Values
 
@@ -255,15 +261,23 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 2053, inode 4849727): 12 files, no impossibilities.
+# . (device 2053, inode 4849727): 14 files, no impossibilities.
 
-# 12 files, no impossibilities in 1 directories.
+# 14 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
 # No implicit rules.
 
 # Files
+
+graphics: visualizer.cpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 25):
+	g++ $(CFLAGS) -o skeletongraph visualizer.cpp $(LDFLAGS)
+	./skeletongraph
 
 # Not a target:
 tree.cpp:
@@ -275,16 +289,25 @@ debug: main.cpp treedebug.o worlddebug.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 12):
+#  recipe to execute (from 'Makefile', line 15):
+ 
 	g++ treedebug.o worlddebug.o main.cpp -o testdebug -g
 	gdb testdebug
 
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-16 15:41:56.847757237
+#  Last modified 2022-06-20 15:07:31.19455594
 #  File has been updated.
 #  Successfully updated.
+
+graphicdebug: visualizer.cpp
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'Makefile', line 29):
+	g++ $(CFLAGS) -g -o skeletongraphdebug visualizer.cpp $(LDFLAGS)
+	gdb skeletongraphdebug
 
 # Not a target:
 tree.hpp:
@@ -297,21 +320,20 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
-make: *** No rule to make target 'all'.  Stop.
-
-#  recipe to execute (from 'Makefile', line 24):
+#  recipe to execute (from 'Makefile', line 35):
 	rm -f *.o
 	rm -f test
 	rm -f testdebug
 	rm -f tsi.txt
 	rm -f tsp.txt
+	rm -f skeletongraph
+	rm -f skeletongraphdebug
 
 world.o: world.cpp world.hpp tree.hpp tree.cpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 6):
+#  recipe to execute (from 'Makefile', line 9):
 	g++ -c world.cpp
 
 # Not a target:
@@ -324,7 +346,7 @@ tree.o: tree.cpp tree.hpp world.cpp world.hpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 9):
+#  recipe to execute (from 'Makefile', line 12):
 	g++ -c tree.cpp
 
 # Not a target:
@@ -350,7 +372,7 @@ test: main.cpp tree.o world.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 2):
+#  recipe to execute (from 'Makefile', line 5):
 	g++ tree.o world.o main.cpp -o test
 	./test
 
@@ -358,18 +380,24 @@ worlddebug.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 19):
+#  recipe to execute (from 'Makefile', line 22):
 	g++ -g -c world.cpp -o worlddebug.o
 
 treedebug.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 16):
+#  recipe to execute (from 'Makefile', line 19):
 	g++ -g -c tree.cpp -o treedebug.o
 
 # Not a target:
 world.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+visualizer.cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -380,19 +408,19 @@ world.cpp:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=17/1024=2%, Rehash=0, Collisions=0/47=0%
+# Load=20/1024=2%, Rehash=0, Collisions=0/52=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 25 / storage = 225 B / avg = 9 B
-# current buf: size = 8162 B / used = 225 B / count = 25 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 29 / storage = 269 B / avg = 9 B
+# current buf: size = 8162 B / used = 269 B / count = 29 / avg = 9 B
 
-# strcache performance: lookups = 52 / hit rate = 51%
+# strcache performance: lookups = 60 / hit rate = 51%
 # hash-table stats:
-# Load=25/8192=0%, Rehash=0, Collisions=0/52=0%
-# Finished Make data base on Fri Jun 17 12:18:24 2022
+# Load=29/8192=0%, Rehash=0, Collisions=0/60=0%
+# Finished Make data base on Tue Jun 21 09:02:14 2022
 
  

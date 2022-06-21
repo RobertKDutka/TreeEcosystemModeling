@@ -265,7 +265,7 @@ Tree::Tree(float apical, float det, float angle, float res_distr, float max_vigo
     this->branch_shedding_threshold = shedding;
     
     // TODO not hard code these
-    this->tropism_up_or_down = 0.5;
+    this->tropism_up_or_down = -0.25;
     this->epsilon = 1.0f;
     this->eta = 1.0f;
 }

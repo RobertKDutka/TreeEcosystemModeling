@@ -1,7 +1,7 @@
 CFLAGS = -std=c++17 -O2
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
-test: main.cpp tree.o world.o
+test: main.cpp tree.o world.o graphics
 	g++ tree.o world.o main.cpp -o test
 	./test
 
@@ -23,7 +23,6 @@ worlddebug.o:
 
 graphics: visualizer.cpp
 	g++ $(CFLAGS) -o skeletongraph visualizer.cpp $(LDFLAGS)
-	./skeletongraph
 
 graphicdebug: visualizer.cpp
 	g++ $(CFLAGS) -g -o skeletongraphdebug visualizer.cpp $(LDFLAGS)

@@ -29,10 +29,10 @@ int main(int argc, char** argv) {
         pid_t pid = fork();
         if(pid == 0) {
             //child process
-            execl("./skeletongraph", NULL);
+            execl("./skeletongraph", "./skeletongraph", NULL);
         }
         std::cin.get();
-        kill(pid, SIGUSR1);
+        kill(pid, SIGTERM);
     }
 
     delete new_world;

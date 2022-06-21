@@ -1,7 +1,6 @@
-make --dry-run --always-make --keep-going --print-directory
+make --dry-run --keep-going --print-directory
 make: Entering directory '/home/robertkdutka/Desktop/modelingecosystem/treeStuff'
-g++ -c tree.cpp
-g++ -c world.cpp
+g++ -std=c++17 -O2 -o skeletongraph visualizer.cpp -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 g++ tree.o world.o main.cpp -o test
 ./test
 make: Leaving directory '/home/robertkdutka/Desktop/modelingecosystem/treeStuff'
